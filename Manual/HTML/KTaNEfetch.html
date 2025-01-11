@@ -42,12 +42,15 @@
                 <p class="flavour-text">The creator of this mod uses Arch, BTW.</p>
 
                 <p>This module will use information from the <a
-                        href="https://github.com/ObjectsCountries/KTaNEfetch/tree/main/Python%20Script"><code>ktanefetch</code></a> command line
+                        href="https://github.com/ObjectsCountries/KTaNEfetch/blob/main/ktanefetch.py"><code>ktanefetch.py</code></a>
+                    command line
                     program to deliver system information about the current computer. Use the <code>ktanefetch</code>
                     program to determine which system information must be submitted.</p>
-                <h3>How to Use <code>ktanefetch</code></h3>
+                <h3>How to Use <code>ktanefetch.py</code></h3>
                 <p><a href="https://www.python.org/downloads/">Python</a> is required to run the script. Once
-                    downloaded, run the script from a terminal. You will be presented with a menu
+                    downloaded, follow the instructions in <a
+                        href="https://github.com/ObjectsCountries/KTaNEfetch/blob/main/README.md">this module's
+                        repo's README</a>. You will be presented with a menu
                     to select different system info components. Use the up and down arrow keys, or <kbd>J</kbd> for down
                     and <kbd>K</kbd> for up, then press <kbd>Space</kbd> to select a component. Once finished, press
                     Enter.</p>
@@ -74,8 +77,8 @@
                         </tr>
                         <tr>
                             <td>Uptime</td>
-                            <td>The number of hours of uptime is less than the starting bomb time (use 1 hour if in Zen
-                                mode) multiplied by the number of batteries</td>
+                            <td>The amount of uptime is less than the time at the moment of code entry multiplied by the
+                                number of batteries</td>
                         </tr>
                         <tr>
                             <td>Shell</td>
@@ -94,17 +97,15 @@
                         </tr>
                         <tr>
                             <td>GPU</td>
-                            <td>At least one CPU and GPU are both made by AMD xor there are no modules with "Cruel" in the
+                            <td>At least one CPU and GPU are both made by AMD xor there are no modules with "Cruel" in
+                                the
                                 name</td>
                         </tr>
                         <tr>
                             <td>RAM</td>
-                            <td>The percentage of solved modules is less than the percentage of RAM used at the time of
+                            <td>The percentage of solved modules at the time of code entry is less than the percentage
+                                of RAM used at the time of
                                 code generation</td>
-                        </tr>
-                        <tr>
-                            <td>Local IP</td>
-                            <td>There is an IP Address widget</td>
                         </tr>
                     </tbody>
                 </table>
@@ -120,7 +121,7 @@
             <div class="page-content">
                 <h3>Desktop Environments</h3>
                 <p>Select the Desktop Environment option if the module corresponding to the current DE is present. <b>If
-                        not running Linux, do not select this option.</b></p>
+                        not running Linux, or if your DE is not listed, do not select this option.</b></p>
                 <table style="text-align:center">
                     <thead>
                         <tr>

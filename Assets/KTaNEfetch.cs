@@ -83,11 +83,16 @@ public class KTaNEfetch : ModdedModule
         {
             if (!Regex.IsMatch(input.text, "\\d\\d\\d\\d"))
             {
-                Strike("STRIKE! Submitted before a full code was entered.");
                 if (!Status.HasStruck)
                 {
+                    Strike("STRIKE! Submitted before a full code was entered.");
                     Log("You now must check if the CPU is from AMD.");
                 }
+                else
+                {
+                    Strike("STRIKE! Submitted before a full code was entered.");
+                }
+                input.text = "____";
             }
             else if (CheckComponents(input.text))
             {
@@ -119,11 +124,16 @@ public class KTaNEfetch : ModdedModule
         }
         catch (FileNotFoundException)
         {
-            Strike("STRIKE! Incorrect code.");
             if (!Status.HasStruck)
             {
+                Strike("STRIKE! Incorrect code.");
                 Log("You now must check if the CPU is from AMD.");
             }
+            else
+            {
+                Strike("STRIKE! Incorrect code.");
+            }
+            input.text = "____";
             return false;
         }
 
@@ -147,7 +157,12 @@ public class KTaNEfetch : ModdedModule
             requiredComponents.Add("Kernel");
         }
 
-        //TODO uptime
+        int uptime = ((int)info.Uptime["days"] * 86400) + ((int)info.Uptime["hours"] * 3600) + ((int)info.Uptime["minutes"] * 60) + ((int)info.Uptime["seconds"]);
+
+        if (uptime < bomb.GetTime())
+        {
+            requiredComponents.Add("Uptime");
+        }
 
         //TODO gameplay room (for shell)
 
@@ -155,17 +170,14 @@ public class KTaNEfetch : ModdedModule
         bool shellIsNotDefault = false;
         if ((int)os.Platform == 2)
         {
-            Log("DEBUG: Running Windows");
             shellIsNotDefault = !info.Shell.ToLower().Contains("cmd") && !info.Shell.ToLower().Contains("powershell");
         }
         else if ((int)os.Platform == 6)
         {
-            Log("DEBUG: Running MacOS");
             shellIsNotDefault = !info.Shell.ToLower().Contains("zsh");
         }
         else if ((int)os.Platform == 4)
         {
-            Log("DEBUG: Running Linux");
             shellIsNotDefault = !info.Shell.ToLower().Contains("bash");
         }
         if (shellIsNotDefault || gameplayRoomIsModded)
@@ -217,10 +229,10 @@ public class KTaNEfetch : ModdedModule
             }
         }
 
-        bool anyCruel = bomb.GetModuleNames().Any(x => x.ToLower().Contains("cruel"));
+        bool noCruel = !bomb.GetModuleNames().Any(x => x.ToLower().Contains("cruel"));
         bool anyAMDgpu = info.GPU.Any(x => x.ToLower().Contains("amd"));
 
-        if ((anyAMDcpu && anyAMDgpu) != anyCruel)
+        if ((anyAMDcpu && anyAMDgpu) != noCruel)
         {
             requiredComponents.Add("GPU");
         }
@@ -228,12 +240,6 @@ public class KTaNEfetch : ModdedModule
         if ((bomb.GetSolvedModuleNames().Count / bomb.GetSolvableModuleNames().Count * 100) <= ((double)info.RAM["used"] / (double)info.RAM["total"] * 100))
         {
             requiredComponents.Add("RAM");
-        }
-
-        //TODO add local ip
-        if (code == "")
-        {
-            Log("Required components: " + string.Join(", ", requiredComponents.ToArray()));
         }
 
         bool wrong = false;
@@ -258,7 +264,16 @@ public class KTaNEfetch : ModdedModule
 
         if (wrong)
         {
-            Strike("Incorrect components.");
+            if (!Status.HasStruck)
+            {
+                Strike("STRIKE! Incorrect components.");
+                Log("You must now check if the CPU is from AMD.");
+            }
+            else
+            {
+                Strike("STRIKE! Incorrect components.");
+            }
+            input.text = "____";
         }
 
         return info.SelectedComponents.SequenceEqual(requiredComponents);
