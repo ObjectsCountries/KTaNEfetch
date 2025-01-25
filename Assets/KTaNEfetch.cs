@@ -19,18 +19,17 @@ public class KTaNEfetch : ModdedModule
         public Dictionary<string, object> OS;
         public string Hostname;
         public Dictionary<string, object> Kernel;
-        public Dictionary<string, int> Uptime;
+        public int[] Uptime;
         public string Shell;
         public string DesktopEnvironment;
         public Dictionary<string, int>[] CPU;
         public string[] GPU;
         public Dictionary<string, object> RAM;
-        public string[] LocalIP;
         public string[] SelectedComponents;
     }
 
     public KMSelectable[] numbers;
-    public KMSelectable backspace, submit;
+    public KMSelectable script, instructions, backspace, submit;
     public MeshRenderer logo;
     public TextMesh input;
     public TextMesh fetchText;
@@ -39,66 +38,89 @@ public class KTaNEfetch : ModdedModule
     public Texture2D defaultIcon;
     public KMBombInfo bomb;
     private List<string> requiredComponents = new List<string>();
+    private bool gameplayRoomIsModded;
 
     void Start()
     {
+        gameplayRoomIsModded = !GameObject.Find("FacilityRoom");
         foreach (KMSelectable numberButton in numbers)
         {
             numberButton.Set(
                         onInteract: () =>
                         {
-                            if (input.text.Contains("_"))
+                            Shake(numberButton, 0.5f, Sound.BigButtonPress);
+                            if (!Status.IsSolved)
                             {
-                                input.text = ReplaceFirst(input.text, "_", numberButton.GetComponentInChildren<TextMesh>().text);
-                            }
-                            else
-                            {
-                                input.text = input.text.Substring(1) + numberButton.GetComponentInChildren<TextMesh>().text;
+                                if (input.text.Contains("_"))
+                                {
+                                    input.text = ReplaceFirst(input.text, "_", numberButton.GetComponentInChildren<TextMesh>().text);
+                                }
+                                else
+                                {
+                                    input.text = input.text.Substring(1) + numberButton.GetComponentInChildren<TextMesh>().text;
+                                }
                             }
                         }
                     );
         }
 
+        script.Set(onInteract: () => {
+            Application.OpenURL("https://github.com/ObjectsCountries/KTaNEfetch/blob/main/ktanefetch.py");
+            Shake(script, 0.75f, Sound.BigButtonPress);
+        });
+
+        instructions.Set(onInteract: () => {
+            Application.OpenURL("https://github.com/ObjectsCountries/KTaNEfetch/blob/main/README.md");
+            Shake(instructions, 0.75f, Sound.BigButtonPress);
+        });
+
         backspace.Set(onInteract: () =>
         {
-            if (Regex.IsMatch(input.text, "\\d___"))
-            {
-                input.text = "____";
+            if (!Status.IsSolved) {
+                if (Regex.IsMatch(input.text, "\\d___"))
+                {
+                    input.text = "____";
+                }
+                else if (Regex.IsMatch(input.text, "\\d\\d__"))
+                {
+                    input.text = input.text.Substring(0, 1) + "___";
+                }
+                else if (Regex.IsMatch(input.text, "\\d\\d\\d_"))
+                {
+                    input.text = input.text.Substring(0, 2) + "__";
+                }
+                else if (Regex.IsMatch(input.text, "\\d\\d\\d\\d"))
+                {
+                    input.text = input.text.Substring(0, 3) + "_";
+                }
             }
-            else if (Regex.IsMatch(input.text, "\\d\\d__"))
-            {
-                input.text = input.text.Substring(0, 1) + "___";
-            }
-            else if (Regex.IsMatch(input.text, "\\d\\d\\d_"))
-            {
-                input.text = input.text.Substring(0, 2) + "__";
-            }
-            else if (Regex.IsMatch(input.text, "\\d\\d\\d\\d"))
-            {
-                input.text = input.text.Substring(0, 3) + "_";
-            }
+            Shake(backspace, 0.75f, Sound.BigButtonPress);
         });
 
         submit.Set(onInteract: () =>
         {
-            if (!Regex.IsMatch(input.text, "\\d\\d\\d\\d"))
-            {
-                if (!Status.HasStruck)
+            if (!Status.IsSolved) {
+                if (!Regex.IsMatch(input.text, "\\d\\d\\d\\d"))
                 {
-                    Strike("STRIKE! Submitted before a full code was entered.");
-                    Log("You now must check if the CPU is from AMD.");
+                    if (!Status.HasStruck)
+                    {
+                        Strike("STRIKE! Submitted before a full code was entered.");
+                        Log("You must now check if the CPU is from AMD.");
+                    }
+                    else
+                    {
+                        Strike("STRIKE! Submitted before a full code was entered.");
+                    }
+                    input.text = "____";
                 }
-                else
+                else if (CheckComponents(input.text))
                 {
-                    Strike("STRIKE! Submitted before a full code was entered.");
+                    fetchText.text = PrintInfo(info);
+                    Solve("Code and components both correct!");
+                    Play(Sound.CorrectChime);
                 }
-                input.text = "____";
             }
-            else if (CheckComponents(input.text))
-            {
-                fetchText.text = PrintInfo(info);
-                Solve("Code and components both correct!");
-            }
+            Shake(submit, 0.75f, Sound.BigButtonPress);
         });
     }
 
@@ -127,7 +149,7 @@ public class KTaNEfetch : ModdedModule
             if (!Status.HasStruck)
             {
                 Strike("STRIKE! Incorrect code.");
-                Log("You now must check if the CPU is from AMD.");
+                Log("You must now check if the CPU is from AMD.");
             }
             else
             {
@@ -157,16 +179,13 @@ public class KTaNEfetch : ModdedModule
             requiredComponents.Add("Kernel");
         }
 
-        int uptime = ((int)info.Uptime["days"] * 86400) + ((int)info.Uptime["hours"] * 3600) + ((int)info.Uptime["minutes"] * 60) + ((int)info.Uptime["seconds"]);
+        int uptime = ((int)info.Uptime[0] * 86400) + ((int)info.Uptime[1] * 3600) + ((int)info.Uptime[2] * 60) + ((int)info.Uptime[3]);
 
         if (uptime < bomb.GetTime())
         {
             requiredComponents.Add("Uptime");
         }
 
-        //TODO gameplay room (for shell)
-
-        bool gameplayRoomIsModded = true;
         bool shellIsNotDefault = false;
         if ((int)os.Platform == 2)
         {
@@ -301,24 +320,40 @@ public class KTaNEfetch : ModdedModule
         }
         if (requiredComponents.Contains("Uptime"))
         {
-            result += "Uptime: ";
-            if (info.Uptime["days"] > 0)
+            List<string> uptimeResult = new List<string>();
+            if (info.Uptime[0] == 1)
             {
-                result += "" + info.Uptime["days"] + " days, ";
+                uptimeResult.Add("" + info.Uptime[0] + " day");
             }
-            if (info.Uptime["hours"] > 0)
+            else if (info.Uptime[0] > 0)
             {
-                result += "" + info.Uptime["hours"] + " hours, ";
+                uptimeResult.Add("" + info.Uptime[0] + " days");
             }
-            if (info.Uptime["minutes"] > 0)
+            if (info.Uptime[1] == 1)
             {
-                result += "" + info.Uptime["minutes"] + " minutes, ";
+                uptimeResult.Add("" + info.Uptime[1] + " hour");
             }
-            if (info.Uptime["seconds"] > 0)
+            else if (info.Uptime[1] > 0)
             {
-                result += "" + info.Uptime["seconds"] + " seconds";
+                uptimeResult.Add("" + info.Uptime[1] + " hours");
             }
-            result += "\n";
+            if (info.Uptime[2] == 1)
+            {
+                uptimeResult.Add("" + info.Uptime[2] + " minute");
+            }
+            else if (info.Uptime[2] > 0)
+            {
+                uptimeResult.Add("" + info.Uptime[2] + " minutes");
+            }
+            if (info.Uptime[3] == 1)
+            {
+                uptimeResult.Add("" + info.Uptime[3] + " second");
+            }
+            else if (info.Uptime[3] > 0)
+            {
+                uptimeResult.Add("" + info.Uptime[3] + " seconds");
+            }
+            result += "Uptime: " + String.Join(", ", uptimeResult.ToArray()) + "\n";
         }
         if (requiredComponents.Contains("Shell"))
         {
@@ -339,10 +374,6 @@ public class KTaNEfetch : ModdedModule
         if (requiredComponents.Contains("RAM"))
         {
             result += "RAM: " + (int)((double)info.RAM["used"] / (double)info.RAM["total"] * 100 + .5) + "% usage\n";
-        }
-        if (requiredComponents.Contains("Local IP"))
-        {
-            result += "Local IP: " + info.LocalIP[0] + "\n";
         }
         Log("Final output: ");
         foreach (string line in result.Split('\n'))

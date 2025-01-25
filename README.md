@@ -3,7 +3,7 @@
 ## How to Use `ktanefetch.py`
 
 1. Install [Python](https://python.org/downloads).
-2. Download `[ktanefetch.py](ktanefetch.py)`.
+2. Download [`ktanefetch.py`](ktanefetch.py).
 3. Run the following command in a terminal: `python3 -m pip install archey4 questionary`
 4. Run the downloaded script.
 

@@ -11,10 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615501dbe4f3fe94fbf4b564abb10237, type: 3}
   m_Name: ModConfig
   m_EditorClassIdentifier: 
-  id: module
-  title: Module
+  id: ktanefetch
+  title: KTaNEfetch
   author: ObjectsCountries
-  description: 'Flavor text here.
+  description: 'The creator of this mod uses Arch, BTW.
 
 
     ID: module
@@ -22,10 +22,10 @@ MonoBehaviour:
     Credits: me because i am awesome and cool and stuff
 
 
-    [url=http://ktane.timwi.de/HTML/Module.html]HTML Manual[/url]
+    [url=http://ktane.timwi.de/HTML/KTaNEfetch.html]HTML Manual[/url]
 
-    [url=http://ktane.timwi.de/PDF/Module.html]PDF Manual[/url]'
+    [url=http://ktane.timwi.de/PDF/KTaNEfetch.html]PDF Manual[/url]'
   version: 1
-  outputFolder: C:\Program Files (x86)\Steam\steamapps\common\Keep Talking and Nobody
-    Explodes\mods
-  previewImage: {fileID: 0}
+  outputFolder: /home/kasra/.local/share/Steam/steamapps/common/Keep Talking and Nobody
+    Explodes/mods
+  previewImage: {fileID: 2800000, guid: 42cf4951a63a64796b71de1130501423, type: 3}
