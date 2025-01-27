@@ -97,7 +97,7 @@ class KTaNEfetch:
         self._result["SelectedComponents"] = self._choices
         if platform.system() == "Windows":
             with open(
-                f"{os.environ.get('TEMP')}\\KTaNfetch_{self._code:04}.json", "xt"
+                f"{os.environ.get('TEMP')}\\KTaNEfetch_{self._code:04}.json", "xt"
             ) as file:
                 dump(self._result, file, indent=4)
         else:
