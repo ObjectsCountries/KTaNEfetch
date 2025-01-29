@@ -181,25 +181,25 @@ public class KTaNEfetch : ModdedModule
 
         int uptime = ((int)info.Uptime[0] * 86400) + ((int)info.Uptime[1] * 3600) + ((int)info.Uptime[2] * 60) + ((int)info.Uptime[3]);
 
-        if (uptime < bomb.GetTime())
+        if (uptime < bomb.GetTime() * bomb.GetBatteryCount())
         {
             requiredComponents.Add("Uptime");
         }
 
-        bool shellIsNotDefault = false;
+        bool shellIsDefault = true;
         if ((int)os.Platform == 2)
         {
-            shellIsNotDefault = !info.Shell.ToLower().Contains("cmd") && !info.Shell.ToLower().Contains("powershell");
+            shellIsDefault = info.Shell.ToLower().Contains("cmd") || info.Shell.ToLower().Contains("powershell");
         }
         else if ((int)os.Platform == 6)
         {
-            shellIsNotDefault = !info.Shell.ToLower().Contains("zsh");
+            shellIsDefault = info.Shell.ToLower().Contains("zsh");
         }
         else if ((int)os.Platform == 4)
         {
-            shellIsNotDefault = !info.Shell.ToLower().Contains("bash");
+            shellIsDefault = info.Shell.ToLower().Contains("bash");
         }
-        if (shellIsNotDefault || gameplayRoomIsModded)
+        if (!shellIsDefault || gameplayRoomIsModded)
         {
             requiredComponents.Add("Shell");
         }
@@ -256,7 +256,7 @@ public class KTaNEfetch : ModdedModule
             requiredComponents.Add("GPU");
         }
 
-        if ((bomb.GetSolvedModuleNames().Count / bomb.GetSolvableModuleNames().Count * 100) <= ((double)info.RAM["used"] / (double)info.RAM["total"] * 100))
+        if ((100 * bomb.GetSolvedModuleNames().Count / (double)bomb.GetSolvableModuleNames().Count) < (int)(100 * (double)info.RAM["used"] / (double)info.RAM["total"]))
         {
             requiredComponents.Add("RAM");
         }
