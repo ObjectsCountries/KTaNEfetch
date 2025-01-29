@@ -2,7 +2,7 @@
   "Author": "ObjectsCountries",
   "Compatibility": "Compatible",
   "DefuserDifficulty": "Medium",
-  "Description": "Use your computer's command line to generate a file that contains system information, and submit said information to the module. Tags: python, command-line, terminal, 14-buttons, digits, 0-9, script, instructions, backspace, submit, black-screen, windows, mac, linux",
+  "Description": "Use your computer's command line to gather system information, and submit said information to the module. Tags: python, command-line, terminal, 14-buttons, digits, 0-9, script, instructions, backspace, submit, black-screen, windows, mac, linux",
   "ExpertDifficulty": "VeryEasy",
   "ModuleID": "ktanefetch",
   "Name": "KTaNEfetch",
