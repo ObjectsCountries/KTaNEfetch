@@ -24,7 +24,7 @@
         }
 
         .page-footer::after {
-            content: ' of 4';
+            content: ' of X';
         }
     </style>
 </head>
@@ -42,32 +42,23 @@
                 <p class="flavour-text">The creator of this mod used to use Arch, BTW.</p>
 
                 <p>This module will gather information about system software and hardware (the OS, hostname, shell,
-                    desktop environment, CPU and GPU). Click your distribution's
-                    logo to change the module into a unique puzzle, depending on your combination of distribution and
-                    desktop environment.</p>
-
-                <p>The module will provide two halves, one above the other. In the
-                    middle will be some starter information depending on what your distribution is based on. The bottom
-                    half will contain target information, depending on the current desktop environment (take the number
-                    in the list and modulo 5). Use the top half to modify the information in the middle. Convert
-                    the middle information into a number and modulo it by 1000. Use the bottom half to validate this
-                    number.</p>
+                    desktop environment, CPU and GPU). Click your distribution's logo to turn the module into a terminal
+                    multiplexer, and solve each stage to complete the module. Navigate between panes with <kbd>Ctrl</kbd>+<kbd>b</kbd>, then an arrow key.</p>
 
                 <h3>Distributions</h3>
                 <ul>
-                    <li>Debian-based <b>(three numbers)</b>: Debian, Armbian, BunsenLabs, Devuan, ElementaryOS, Enso OS,
-                        Kali Linux, Linux
-                        Mint, Pop!_OS, Raspbian, Siduction, Ubuntu (12)</li>
-                    <li>RHEL-based <b>(two RGB rectangles)</b>: RedHat Enterprise Linux, CentOS, Fedora Linux, Nobara,
+                    <li>Debian-based: Debian, Armbian, BunsenLabs, Devuan, ElementaryOS, Enso OS,
+                        Kali Linux, Linux Mint, Pop!_OS, Raspbian, Siduction, Ubuntu (12)</li>
+                    <li>RHEL-based: RedHat Enterprise Linux, CentOS, Fedora Linux, Nobara,
                         Rocky Linux (5)</li>
-                    <li>Arch-based <b>(six-letter word)</b>: Arch Linux, EndeavourOS, Manjaro, Parabola (4)
+                    <li>Arch-based: Arch Linux, CachyOS, EndeavourOS, Manjaro, Parabola (5)
                     </li>
-                    <li>BSDs <b>(moving sine wave)</b>: FreeBSD, OpenBSD, MacOS, NetBSD (4)</li>
-                    <li>Other <b>(ten-block meter)</b>: Alpine Linux, Buildroot, Gentoo, Guix, OpenSUSE, Slackware,
+                    <li>BSDs: FreeBSD, OpenBSD, MacOS, NetBSD (4)</li>
+                    <li>Other: Alpine Linux, Buildroot, Gentoo, Guix, OpenSUSE, Slackware,
                         Univalent, Windows 10, Windows 11 (9)</li>
                 </ul>
                 <h3>Desktop Environments</h3>
-                <ol start=0>
+                <ol>
                     <li>Budgie</li>
                     <li>Cinnamon</li>
                     <li>COSMIC</li>
@@ -84,48 +75,22 @@
         </div>
 
 
+
         <div class="page page-bg-02">
             <div class="page-header">
                 <span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
                 <span class="page-header-section-title">KTaNEfetch</span>
             </div>
             <div class="page-content">
-                <h3>Conversion</h3>
+                <h3>VimBeGood</h3>
+                <p>The module will present you with multiple challenges, to be completed with a keyboard and Vim
+                    motions only:</p>
                 <ul>
-                    <li>Numbers: take them as is.</li>
-                    <li>RGB rectangles: Convert the red, green and blue of the left and the right to a 6-bit binary
-                        number, multiply by 16, and add the sum of the digits in the serial number.</li>
-                    <li>Six-letter word: Multiply the alphabetical position of the first letter by that of the last
-                        letter (one-indexed).</li>
-                    <li>Sine Wave: The frequency is the first digit, the amplitude is the second, and the speed the
-                        third. A value of 10 for any of these counts as a 0.</li>
-                    <li>Ten-Block Meter: Leaving the meter at a certain position for 5 real-time seconds counts as
-                        submitting a digit. The last three digits submitted will count as the result. The blocks
-                        will change from green to white once submitted.</li>
+                    <li>Given a set of words such as <code>bar bar bar far bar</code>, jump to the unique word and delete it. Use <kbd>w</kbd> to jump forward one word, <kbd>b</kbd> to jump backwards, and <kbd>d</kbd> then <kbd>w</kbd> to delete the word.</li>
+                    <li>With the navigation keys specified below and the <kbd>x</kbd> key to delete, remove the <code>x</code> on screen.</li>
+                    <li>By entering a number, then <kbd>j</kbd> or <kbd>k</kbd>, jump multiple lines at once to the line that reads <code>DELETE_ME</code>. Then, press <kbd>d</kbd> twice to delete the line.</li>
                 </ul>
-                <h3>Components</h3>
-                <h4>Reset Button</h4>
-                <p>This button will reset all components and information to their initial state.</p>
-                <h4>0. Switches</h4>
-                <p>This component features 3 switches: one red, one green and one blue.</p>
-                <p><b>Top</b>: The switches will modify the middle information in a predetermined, but obscured,
-                    fashion. Before
-                    interacting with the bottom component, make sure that the correct switches are up.
-                    Leave the red switch up if you have a CPU/GPU made by AMD, the green switch for Nvidia, and the blue
-                    switch for Intel. Each time a switch goes up, it will either:</p>
-                <ul>
-                    <li>Increase each digit by 1, wrapping around</li>
-                    <li>Toggle red, green or blue for one of the rectangles (different switches can impact different
-                        rectangles)</li>
-                    <li>Shift the letters in the word 1 spot left, 1 spot right or 2 spots left</li>
-                    <li>Toggle the frequency, amplitude or speed of the sine wave between two values</li>
-                    <li>Alter the value of the meter by one of three values, wrapping around</li>
-                </ul>
-                <p>Nothing will happen if the switch goes from up to down.</p>
-                <p><b>Bottom</b>: The three switches will change each timer second in a sequence of 4 arrangements, with
-                    all switches being gray and down to indicate the beginning of the sequence coming next. Convert each
-                    arrangement to a base-8 number, concatenate them, convert the base-8 concatenation to base 10, then
-                    modulo 1000.</p>
+                <p>Use <kbd>h</kbd> to go left, <kbd>j</kbd> to go down, <kbd>k</kbd> to go up, and <kbd>l</kbd> to go right. Using the arrow keys during this stage will warrant a strike.</p>
             </div>
             <div class="page-footer relative-footer">2</div>
         </div>
@@ -136,97 +101,44 @@
                 <span class="page-header-section-title">KTaNEfetch</span>
             </div>
             <div class="page-content">
-                <h4>1. Number Pad</h4>
-                <p><b>Top</b>: Two components of the number pad will be switched: the button corresponding to the
-                    current
-                    desktop environment and the button corresponding to the sum of the digits in the OS
-                    version (including "10" or "11" on Windows), modulo 10. If these are the same button, the button
-                    above/below will be switched. Each button will:</p>
-                <ul>
-                    <li>Concatenate its number to the three digits</li>
-                    <li>Alter the rectangles in the following way, depending on its digit modulo 5 (left one if digit is
-                        less than 5,
-                        right if 5 or more):
-                        <ol start=0>
-                            <li>Toggle red</li>
-                            <li>Toggle green</li>
-                            <li>Toggle blue</li>
-                            <li>Toggle red and green</li>
-                            <li>Toggle green and blue</li>
-                        </ol>
-                    </li>
-                    <li>Change the positioning of the word's letters by their number</li>
-                    <li>Alter the sine wave by frequency, amplitude or speed</li>
-                    <li>Set the value of the ten-block meter</li>
-                </ul>
-                <p>Only buttons with numbers found anywhere in the system information can be pressed.</p>
-                <p><b>Bottom</b>: The numbers will be randomized, with duplicates possible. Start from the position of
-                    the serial number (0-indexed), and take the digit at that position along with the next two, wrapping
-                    around if needed.</p>
-                <h4>2. Dials</h4>
-                <p><b>Top</b>: The dials will have unique labels and possible positions depending on the middle
-                    component:</p>
-                <ul>
-                    <li>3 dials with 10 positions each, controlling each digit</li>
-                    <li>2 dials with 8 positions each, controlling each rectangle's colors</li>
-                    <li>1 dial with 6 positions, controlling the offset of the letters</li>
-                    <li>3 dials with 10 positions each, controlling each attribute of the sine wave</li>
-                    <li>1 dial with 10 positions, controlling the value of the meter</li>
-                </ul>
-                <p>Dials can only be moved when the last digit of the timer is odd if the shell is
-                    <code>/usr/bin/bash</code>, and even if not.
-                </p>
-                <p><b>Bottom</b>: There will always be 3 dials with 10 positions each, representing the target number.
-                </p>
+                <h3>Unique Combination</h3>
+                <p>For this section, the module background will be one of the 8 RGB colors. Depending on your distribution and desktop environment, take one of multiple actions. These instructions should be interpreted as "Do the first item if the condition is met, and the second item if not", and code should be executed as commands. Note that dashes should always be attached to the letters after them.</p>
+                <table style="text-align:center;font-size:13px">
+                    <thead>
+                        <tr>
+                            <th>DE, Distro</th><th>Debian-Based</th><th>RHEL-Based</th><th>Arch-Based</th><th>Other</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Budgie/<br>Cinnamon/<br>COSMIC</th><td>Click and hold, cyan, tap</td><td>Split the pane horizontally, contains green, split the pane vertically</td><td><code>sudo pacman -Syu</code>, black or magenta, <code>yay -Syu</code></td><td><code>touch file.txt</code>, red or yellow, <code>rm file.txt</code></td>
+                        </tr>
+                        <tr>
+                            <th>GNOME/KDE/LXDE</th><td>Tap once, white, tap twice</td><td>Open a new window, blue, split pane either way</td><td><code>sudo pacman -S package</code>, contains red, <code>yay -S package-git</code></td><td><code>ls folder</code>, blue or yellow, <code>cat file.txt</code></td>
+                        </tr>
+                        <tr>
+                            <th>MATE/Trinity/XFCE</th><td>Hold for 1 real second, contains blue, hold for 2 real seconds</td><td>Rename window to <code>Unique</code>, green, rename window to <code>Combination</code></td><td><code>sudo pacman -R package</code>, yellow, <code>sudo pacman -Rns package</code></td><td><code>mkdir folder</code>, red, <code>rmdir folder</code></td>
+                        </tr>
+                        <tr>
+                            <th>Other</th><td>Hold until green, black, hold until black</td><td>Split pane horizontally, yellow or black, rename window to <code>BEES</code></td><td><code>yay -R package-git</code>, green or white, <code>yay -Rns package-git</code></td><td><code>grep something file.txt</code>, magenta, <code>grep nothing file.txt</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>Split the pane horizontally with <kbd>Ctrl</kbd>+<kbd>b</kbd>, then <kbd>"</kbd>. Split the pane vertically with <kbd>Ctrl</kbd>+<kbd>b</kbd>, then <kbd>%</kbd>. Open a new window with <kbd>Ctrl</kbd>+<kbd>b</kbd>, then <kbd>c</kbd>. Rename the current window with <kbd>Ctrl</kbd>+<kbd>b</kbd>, then <kbd>,</kbd>.</p>
             </div>
             <div class="page-footer relative-footer">3</div>
         </div>
 
-
-        <div class="page page-bg-05">
+        <div class="page page-bg-07">
             <div class="page-header">
                 <span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
                 <span class="page-header-section-title">KTaNEfetch</span>
             </div>
             <div class="page-content">
-                <h4>3. Keyboard</h4>
-                <p><b>Top</b>: The keyboard will contain every letter of the alphabet, as well as a hyphen. Only keys
-                    with characters that are in the hostname can be pressed. If the hostname contains 14 or
-                    more distinct characters, then only keys with letters in the serial number can be pressed. When a
-                    key is pressed, it will:</p>
-                <ul>
-                    <li>Add its position in the alphabet to a certain digit, wrapping around (A-J the first digit, K-S
-                        the second, T-Z and hyphen the third)</li>
-                    <li>Toggle the RGB colors of a rectangle (A-E red left, F-I green left, J-N blue left, O-Q red
-                        right, R-U green right, V-Z and hyphen blue right)</li>
-                    <li>Add itself to the six-letter word (though the word still has to be a shift of
-                        the original word in order to be valid); the hyphen will have no effect</li>
-                    <li>Set one of the attributes of the sine wave to its alphabetic position modulo 10 (A-J the
-                        frequency, K-S the amplitude, T-Z and hyphen the speed)</li>
-                    <li>Modify the ten-block meter by setting it to its alphabetic position modulo 10 (hyphen counts as
-                        7)</li>
-                </ul>
-                <p><b>Bottom</b>: Some of the letters will be green instead of black. These letters, in alphabetical
-                    order with their positions modulo 10, represent the target number.</p>
-                <h4>4. Slider</h4>
-                <p><b>Top</b>: This slider will have varying effects depending on (the last
-                    digit of the timer multiplied by the number of distributions that share a common ancestor with the
-                    current one) modulo 10. The slider can be changed via a left and right button, and will:</p>
-                <ul>
-                    <li>Change the number directly between one of 4 options (two leading digits and the product)</li>
-                    <li>Modify the rectangles, cycling between 8 RGB colors (even digit modifies the left rectangle, odd
-                        modifies the right)</li>
-                    <li>Cycle the letters (with an offset determined by the product relative to the current offset plus
-                        the slider position, modulo 6 and plus 1)</li>
-                    <li>Cycle between 4 different sine waves (with speed determined by the product)</li>
-                    <li>Change the ten-block meter directly (left adds the slider value to the product,
-                        right takes the difference)</li>
-                </ul>
-                <p><b>Bottom</b>: The slider will change between three different values, then will go to the farthest
-                    left to represent the beginning of the sequence. These three values represent the target number.</p>
             </div>
-            <div class="page-footer relative-footer">4</div>
+            <div class="page-footer relative-footer">7</div>
         </div>
+
     </div>
 </body>
 
