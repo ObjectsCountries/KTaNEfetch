@@ -29,9 +29,8 @@ public class KTaNEfetch : ModdedModule
     }
 
     public KMSelectable[] numbers;
-    public KMSelectable script, instructions, backspace, submit;
+    // public KMSelectable script, instructions, backspace, submit;
     public MeshRenderer logo;
-    public TextMesh input;
     public TextMesh fetchText;
     private SystemInfo info;
     public Texture2D[] distros;
@@ -39,10 +38,27 @@ public class KTaNEfetch : ModdedModule
     public KMBombInfo bomb;
     private List<string> requiredComponents = new List<string>();
     private bool gameplayRoomIsModded;
+    private KTaNEfetchInfo ktf;
 
     void Start()
     {
+
+        ktf = new KTaNEfetchInfo();
+        fetchText.text = ktf.ToString();
+
+        logo.material.mainTexture = defaultIcon;
+        foreach (Texture2D distro in distros)
+        {
+            if (ktf.osName.ToLower().Contains(distro.name))
+            {
+                logo.material.mainTexture = distro;
+            }
+        }
+
         gameplayRoomIsModded = !GameObject.Find("FacilityRoom");
+
+        /*
+
         foreach (KMSelectable numberButton in numbers)
         {
             numberButton.Set(
@@ -122,6 +138,8 @@ public class KTaNEfetch : ModdedModule
             }
             Shake(submit, 0.75f, Sound.BigButtonPress);
         });
+
+        */
     }
 
     bool CheckComponents(string code)
@@ -155,7 +173,7 @@ public class KTaNEfetch : ModdedModule
             {
                 Strike("STRIKE! Incorrect code.");
             }
-            input.text = "____";
+            // input.text = "____";
             return false;
         }
 
@@ -292,7 +310,7 @@ public class KTaNEfetch : ModdedModule
             {
                 Strike("STRIKE! Incorrect components.");
             }
-            input.text = "____";
+            // input.text = "____";
         }
 
         return info.SelectedComponents.SequenceEqual(requiredComponents);
